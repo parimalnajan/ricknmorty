@@ -1,0 +1,18 @@
+.pagination-wrapper{
+    display: flex;
+ 
+    border: 0.5px solid silver;
+    border-radius: 4px;
+    max-width: fit-content;
+}
+
+.pagination-items{
+    padding: 2px  8px  2px 8px;
+    border: 0.5px silver solid;
+    color:rgb(41, 109, 228);
+}
+
+.pagination-active{
+    background-color: rgb(41, 109, 228);
+    color:white
+}

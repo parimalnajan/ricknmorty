@@ -1,5 +1,4 @@
 import React from 'react'
-import CharacterProfile from './CharacterProfile'
 import CharactersList from './CharactersList'
 
 const Characters = () => {
@@ -7,7 +6,6 @@ const Characters = () => {
     <>
     <div>Characters index</div>
     <CharactersList/>
-    <CharacterProfile/>
     </>)
 }
 
