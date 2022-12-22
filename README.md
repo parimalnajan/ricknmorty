@@ -7,11 +7,12 @@ Features:
 - Uses ESLint for consistent coding style.
 - Promise.all utilized to avoid network waterfall.
 - Uses Tailwind css for styling
+- Responsive design
 
 Todo :
 - Adding Tests
 - Adding loader animations and placeholder images
-- Improving Pagination UI
+- UI beautification
 
 WIP : 
 - Adding Search feature for characters 
