@@ -1,50 +1,62 @@
+export const getAllCharacters = async (pageNumber) => {
+  const domain = "https://rickandmortyapi.com/api/character?";
+  const response = await fetch(domain + pageNumber);
+  const json = await response.json();
+  return json;
+};
 
-export const getAllCharacters = async (pageNumber) =>{
-        const domain="https://rickandmortyapi.com/api/character?";
-        const response = await fetch(domain+pageNumber);
-        const json = await response.json();
-        return json
-}
-
+export const queryByUrl = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
 
 export const getCharacterSpecificData = async (originUrl,locationUrl,episodesArray) => {
-	console.log(originUrl,locationUrl,episodesArray)
 
-	// const response = await fetch(episodesArray[1]);
+  console.log(locationUrl, episodesArray[1]);
+  let characterData = {};   //object to be returned
 
-	const originPromise =  fetch(originUrl).then(res=>res.json())
-	console.log(originPromise)
-	// const originData = await originPromise.json();
+    //Checking and handling empty reponses
+  if (originUrl !== "") {
+    const originData = await queryByUrl(originUrl);
+    characterData =  { ...characterData, originData };
+  } else {
+    characterData =  { ...characterData, originData: "unknown" };
+  }
 
-	const locationPromise =  fetch(locationUrl).then(res=>res.json())
-	console.log(locationPromise)
+  if (locationUrl !== "") {
+    const locationData = await queryByUrl(locationUrl);
+    characterData = { ...characterData, locationData };
+  } else {
+    characterData = { ...characterData, locationData: "unknown" };
+  }
 
-	// const locationData = await locationResponse.json();
+// Next block does a parallel fetch for all episodes
+    // Tried but did not include the locations api calls with this as it was failing in some cases, causing the entire operation to fail.
+  let episodesPromiseArray = episodesArray.map((episodeUrl) => {
+    return fetch(episodeUrl);
+  });
 
-	// console.log(originData,locationData)
+  let episodesResponseArray = await Promise.all(episodesPromiseArray); //returns array of responses
+  let episodesData = await Promise.all(     //call .json() on each response
+    episodesResponseArray.map((res) => {
+      return res.json();
+    })
+  );
+   characterData =  { ...characterData, episodesData }; // add episodes to be reurned
 
-	const requestsArray = [locationPromise,originPromise]
+   return characterData;
 
-	let results = await Promise.all([requestsArray])
-	console.log(results)
 
-	// Promise.all(requestsArray)
-    // .then((results) =>{
-	// 	console.log(results)
-	// 	responseArray = results.map((x)=>{
-	// 		x.json().then((data)=> console.log(data))
-	// 	})
-	// 	console.log(responseArray)
-	// })
-    // .catch((err) => console.log(err))
-	
-	// Promise.all(episodesArray.map((request) => {
-	// 	return fetch(request).then((response) => {
-	// 		return response.json();
-	// 	}).then((data) => {
-	// 		return data;
-	// 	});
-	// })).then((values) => {
-	// 	console.log('values', values);
-	// }).catch(console.error.bind(console));
-}
+  // TODO: try without async syntax -
+
+  // Promise.all(episodesArray.map((request) => {
+  // 	return fetch(request).then((response) => {
+  // 		return response.json();
+  // 	}).then((data) => {
+  // 		return data;
+  // 	});
+  // })).then((values) => {
+  // 	console.log('values', values);
+  // }).catch(console.error.bind(console));
+};

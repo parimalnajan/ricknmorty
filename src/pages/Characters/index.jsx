@@ -4,7 +4,7 @@ import CharactersList from './CharactersList'
 const Characters = () => {
   return (
     <>
-    <div>Characters index</div>
+    <div></div>
     <CharactersList/>
     </>)
 }
