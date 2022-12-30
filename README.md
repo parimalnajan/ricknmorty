@@ -6,8 +6,8 @@ Note: Development was done on windows, there could be issues running on ubuntu
 Features:
 - Uses ESLint for consistent coding style.
 - Promise.all utilized to avoid network waterfall.
-- Uses Tailwind css for styling
-- Responsive design
+- Responsive design using Tailwind css
+- Pagination 
 
 Todo :
 - Adding Tests
